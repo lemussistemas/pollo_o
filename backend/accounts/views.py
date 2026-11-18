@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .catalog import POLITICA_DEVOLUCION, PUNTOS_DE_VENTA, flujo_for
+from .catalog import NOMBRE, POLITICA_DEVOLUCION, PUNTOS, VEHICULOS, flujo_for
 from .models import Role, User
 from .permissions import require_access
 from .serializers import RoleSerializer, UserSerializer, UserWriteSerializer
@@ -56,8 +56,10 @@ class SistemaView(APIView):
         user = User.objects.with_access().get(pk=request.user.pk)
         return Response(
             {
-                "nombre": "Distribuidora de pollo",
-                "puntos_de_venta": PUNTOS_DE_VENTA,
+                "nombre": NOMBRE,
+                "puntos_de_venta": len(PUNTOS),
+                "puntos": PUNTOS,
+                "vehiculos": VEHICULOS,
                 "politica_devolucion": POLITICA_DEVOLUCION,
                 "flujo": flujo_for(user),
             }

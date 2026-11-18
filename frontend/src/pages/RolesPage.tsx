@@ -64,7 +64,7 @@ export function RolesPage() {
           <p className="eyebrow">Quién hace qué</p>
           <h1>Cinco roles para un solo recorrido.</h1>
           <p className="lede">
-            Gerencia asigna uno de estos roles. No se crean roles nuevos: cada persona entra a la parte
+            Admin asigna uno de estos roles. No se crean roles nuevos: cada persona entra a la parte
             del día que le toca.
           </p>
         </div>

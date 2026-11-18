@@ -23,7 +23,7 @@ class RoleSetupTests(TestCase):
 
     def test_catalog_has_five_roles_and_full_matrix(self):
         self.assertEqual(Role.objects.count(), 5)
-        self.assertEqual(RolePermission.objects.count(), 5 * 16)
+        self.assertEqual(RolePermission.objects.count(), 5 * 23)
         gerencia = RolePermission.objects.get(
             role__code="gerencia", permission__code="usuarios.gestionar"
         )
@@ -68,6 +68,11 @@ class RoleSetupTests(TestCase):
         response = client.get("/api/sistema/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data["puntos_de_venta"], 5)
+        self.assertEqual(
+            [point["name"] for point in response.data["puntos"]],
+            ["Ruta foránea", "Pulperías", "Bodegas", "Sala de ventas", "OPL"],
+        )
+        self.assertEqual(response.data["vehiculos"], {"camiones": 3, "motocarga": 1})
         steps = {step["code"]: step for step in response.data["flujo"]}
         self.assertEqual(steps["facturacion_ruta"]["nivel"], "own")
         self.assertFalse(steps["facturacion_pdv"]["participa"])
@@ -129,7 +134,7 @@ class RoleSetupTests(TestCase):
             format="json",
         )
         self.assertEqual(blocked.status_code, 400, blocked.content)
-        self.assertIn("gerencia", str(blocked.data).lower())
+        self.assertIn("admin", str(blocked.data).lower())
 
         other = client.post(
             "/api/usuarios/",

@@ -9,6 +9,6 @@ class AccountsConfig(AppConfig):
     def ready(self):
         from django.contrib import admin
 
-        admin.site.site_header = "Distribuidora de pollo"
+        admin.site.site_header = "Distribuidora Pollo Rey"
         admin.site.site_title = "Distribuidora"
         admin.site.index_title = "Administración"

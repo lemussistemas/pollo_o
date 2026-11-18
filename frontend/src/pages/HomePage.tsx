@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 import { ApiError, api } from "../api.ts"
 import { useAuth } from "../auth/useAuth.ts"
@@ -6,8 +7,9 @@ import { LevelPill } from "../components/LevelPill.tsx"
 import type { Sistema } from "../types.ts"
 
 export function HomePage() {
-  const { user } = useAuth()
+  const { user, can } = useAuth()
   const [sistema, setSistema] = useState<Sistema | null>(null)
+  const [nuevos, setNuevos] = useState(0)
   const [error, setError] = useState("")
 
   useEffect(() => {
@@ -26,6 +28,19 @@ export function HomePage() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!can("clientes.ver")) return
+    let cancel = false
+    api<{ nuevos: number }>("/api/clientes/avisos/")
+      .then((data) => {
+        if (!cancel) setNuevos(data.nuevos)
+      })
+      .catch(() => {})
+    return () => {
+      cancel = true
+    }
+  }, [can])
+
   return (
     <div className="page">
       <header className="page-head">
@@ -40,6 +55,13 @@ export function HomePage() {
         </div>
       </header>
 
+      {nuevos > 0 ? (
+        <p className="ok">
+          Hay {nuevos} {nuevos === 1 ? "cliente nuevo" : "clientes nuevos"} esta semana.{" "}
+          <Link to="/clientes?nuevos=1">Verlos</Link>
+        </p>
+      ) : null}
+
       {error ? (
         <p className="notice" role="alert">
           {error}
@@ -47,9 +69,11 @@ export function HomePage() {
       ) : null}
 
       <section className="policy">
-        <p>{sistema?.politica_devolucion ?? "No se devuelve producto, salvo que esté en mal estado."}</p>
+        <p>{sistema?.politica_devolucion}</p>
         <p className="policy-meta">
-          La bodega principal reparte a {sistema?.puntos_de_venta ?? 5} puntos de venta.
+          La bodega seca abastece {(sistema?.puntos ?? []).map((punto) => punto.name).join(", ") || "los puntos de venta"}.
+          En ruta salen {sistema?.vehiculos?.camiones ?? 3} camiones y {sistema?.vehiculos?.motocarga ?? 1} motocarga.
+          Cada punto factura con su propio CAI.
         </p>
       </section>
 
@@ -74,11 +98,16 @@ export function HomePage() {
 
       <section className="roadmap">
         <p className="eyebrow">Módulo en curso</p>
-        <h2>Usuarios y roles</h2>
+        <h2>Carga</h2>
         <p>
-          El siguiente módulo es el ingreso de producto a bodega: cargarlo al sistema, armar los camiones
-          y despacharlos a los puntos.
+          Inventario arma la carga de los tres camiones y la motocarga con lo que hay en bodega, lote por lote.
+          Lo que sigue es el despacho a los cinco puntos.
         </p>
+        {can("distribucion.carga") ? (
+          <p>
+            <Link to="/carga">Abrir la carga</Link>
+          </p>
+        ) : null}
       </section>
     </div>
   )

@@ -45,6 +45,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "accounts",
+    "clientes",
+    "libros",
+    "productos",
+    "bodega",
+    "distribucion",
 ]
 
 MIDDLEWARE = [
@@ -115,8 +120,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "es"
 
-# UTC-6 todo el año. Cámbiala si la distribuidora opera en otra zona.
-TIME_ZONE = "America/Guatemala"
+# Honduras, UTC-6. Pollo Rey factura con CAI del SAR.
+TIME_ZONE = "America/Tegucigalpa"
 
 USE_I18N = True
 
@@ -153,3 +158,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"

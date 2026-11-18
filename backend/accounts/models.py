@@ -20,8 +20,8 @@ LEVEL_RANK = {
 
 
 class RoleCode(models.TextChoices):
-    GERENCIA = "gerencia", "Gerencia"
-    CONTADOR = "contador", "Contador"
+    GERENCIA = "gerencia", "Admin"
+    CONTADOR = "contador", "Contabilidad"
     FACTURACION = "facturacion", "Facturación"
     VENDEDOR = "vendedor", "Vendedor"
     INVENTARIO = "inventario", "Inventario"

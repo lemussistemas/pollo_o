@@ -5,6 +5,11 @@ import { useAuth } from "../auth/useAuth.ts"
 export function Shell() {
   const { user, logout, can } = useAuth()
   const seesUsers = can("usuarios.ver") || can("usuarios.gestionar")
+  const seesClients = can("clientes.ver")
+  const seesBooks = can("contabilidad.libros")
+  const seesProducts = can("productos.ver")
+  const seesWarehouse = can("inventario.ingreso")
+  const seesLoads = can("distribucion.carga")
 
   return (
     <div className="shell">
@@ -15,7 +20,7 @@ export function Shell() {
           </span>
           <div>
             <p className="brand-kicker">Distribuidora</p>
-            <p className="brand-name">Pollo</p>
+            <p className="brand-name">Pollo Rey</p>
           </div>
         </div>
         <nav className="nav" aria-label="Módulos">
@@ -25,6 +30,34 @@ export function Shell() {
           <NavLink to="/roles" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
             Roles
           </NavLink>
+          {seesBooks ? (
+            <NavLink to="/libros" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              Libros
+            </NavLink>
+          ) : null}
+          {seesLoads ? (
+            <NavLink to="/carga" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              Carga
+            </NavLink>
+          ) : null}
+          {seesWarehouse ? (
+            <NavLink to="/bodega" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              Bodega
+            </NavLink>
+          ) : null}
+          {seesProducts ? (
+            <NavLink to="/productos" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              Productos
+            </NavLink>
+          ) : null}
+          {seesClients ? (
+            <NavLink
+              to="/clientes"
+              className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+            >
+              Clientes
+            </NavLink>
+          ) : null}
           {seesUsers ? (
             <NavLink
               to="/usuarios"

@@ -368,6 +368,80 @@ button {
   color: var(--ink);
 }
 
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.stat {
+  padding: 0.8rem 0.95rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.stat span {
+  display: block;
+  color: var(--copper-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stat strong {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 560;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: end;
+  margin-bottom: 0.8rem;
+}
+
+.filters label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.money,
+th.money {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+tr.void td {
+  color: #8a8178;
+}
+
+.book-section {
+  margin-top: 1.2rem;
+  padding: 0.4rem 0.9rem 0.9rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.book-section summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.55rem 0;
+}
+
+.stack-table {
+  margin-top: 1rem;
+}
+
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--line);
@@ -452,12 +526,35 @@ th.mine {
   min-width: min(100%, 280px);
 }
 
-.user-form {
+.user-form,
+.equipment {
   display: grid;
   gap: 0.75rem;
   padding: 1rem;
   position: sticky;
   top: 1rem;
+}
+
+.equipment {
+  position: static;
+  margin-top: 0.8rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1.1rem;
+}
+
+.equipment-form {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.equipo-foto {
+  display: block;
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 0.7rem;
+  margin-top: 0.45rem;
 }
 
 .split {

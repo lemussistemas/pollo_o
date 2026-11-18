@@ -5,10 +5,10 @@ import { ApiError } from "../api.ts"
 import { useAuth } from "../auth/useAuth.ts"
 
 const STEPS = [
-  "El pollo entra a la bodega principal y se carga al sistema.",
-  "Se arman los camiones y se reparte a 5 puntos de venta.",
-  "Facturación atiende los puntos. El vendedor factura en la tablet.",
-  "Al regreso se vuelve a inventariar. Solo vuelve lo que está en mal estado.",
+  "El producto entra a la bodega seca y se carga al sistema.",
+  "Salen 3 camiones y 1 motocarga hacia los cinco puntos.",
+  "Cada punto factura con su CAI. En ruta se imprime y se sincroniza al tener internet.",
+  "Al regreso se vuelve a inventariar. Lo dañado sale del inventario.",
 ]
 
 export function LoginPage() {

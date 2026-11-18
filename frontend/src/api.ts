@@ -12,6 +12,28 @@ const FIELD_LABELS: Record<string, string> = {
   phone: "Teléfono",
   role_id: "Rol",
   is_active: "Estado",
+  nombre: "Nombre",
+  rtn: "RTN",
+  limite_credito: "Límite de crédito",
+  punto_id: "Punto de venta",
+  vendedor_id: "Vendedor",
+  latitud: "Latitud",
+  longitud: "Longitud",
+  dia_ruta: "Día de ruta",
+  modelo: "Modelo",
+  placa: "Placa",
+  ubicacion: "Ubicación",
+  precio: "Precio",
+  precio_base: "Precio de lista",
+  unidad: "Unidad",
+  cliente_id: "Cliente",
+  producto_id: "Producto",
+  cantidad: "Cantidad",
+  lote: "Lote",
+  fecha_vencimiento: "Vencimiento",
+  existencia_id: "Existencia",
+  vehiculo_id: "Vehículo",
+  fecha: "Fecha",
 }
 
 export class ApiError extends Error {
@@ -65,7 +87,7 @@ async function refreshAccess(): Promise<string | null> {
 
 export async function api<T>(path: string, init: RequestInit = {}, retry = true): Promise<T> {
   const headers = new Headers(init.headers)
-  if (init.body && !headers.has("Content-Type")) {
+  if (init.body && !(init.body instanceof FormData) && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json")
   }
   const access = localStorage.getItem(ACCESS_KEY)

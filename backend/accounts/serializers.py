@@ -185,7 +185,7 @@ class UserWriteSerializer(serializers.ModelSerializer):
                 )
                 if not still_there:
                     raise serializers.ValidationError(
-                        "Debe quedar al menos un usuario activo con el rol de gerencia."
+                        "Debe quedar al menos un usuario activo con el rol de admin."
                     )
         return attrs
 

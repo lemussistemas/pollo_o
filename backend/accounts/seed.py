@@ -6,8 +6,8 @@ from .models import Permission, Role, RolePermission, User
 DEMO_PASSWORD = "Pollo2026"
 
 DEMO_USERS = [
-    ("gerencia", "Gerencia", "Demo", "gerencia", True, True),
-    ("contador", "Contador", "Demo", "contador", False, False),
+    ("gerencia", "Admin", "Demo", "gerencia", True, True),
+    ("contador", "Contabilidad", "Demo", "contador", False, False),
     ("facturacion", "Facturación", "Demo", "facturacion", False, False),
     ("vendedor", "Vendedor", "Demo", "vendedor", False, False),
     ("inventario", "Inventario", "Demo", "inventario", False, False),
@@ -53,7 +53,7 @@ def seed():
 
     created_users = []
     for username, first_name, last_name, role_code, is_staff, is_superuser in DEMO_USERS:
-        _user, created = User.objects.get_or_create(
+        user, created = User.objects.get_or_create(
             username=username,
             defaults={
                 "first_name": first_name,
@@ -65,9 +65,18 @@ def seed():
             },
         )
         if created:
-            _user.set_password(DEMO_PASSWORD)
-            _user.save(update_fields=["password"])
+            user.set_password(DEMO_PASSWORD)
+            user.save(update_fields=["password"])
             created_users.append(username)
+        elif user.last_name == "Demo" and user.first_name != first_name:
+            user.first_name = first_name
+            user.save(update_fields=["first_name"])
+
+    from clientes.seed import seed_puntos
+    from distribucion.seed import seed_vehiculos
+
+    seed_puntos()
+    seed_vehiculos()
 
     return {
         "roles": len(roles),
